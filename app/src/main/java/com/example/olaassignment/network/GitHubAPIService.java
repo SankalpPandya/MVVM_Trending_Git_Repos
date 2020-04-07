@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GitHubAPIService {
 
-    private static final String BASE_URL = "https://github-trending-api.now.sh/repositories";
+    private static final String BASE_URL = "https://github-trending-api.now.sh";
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)

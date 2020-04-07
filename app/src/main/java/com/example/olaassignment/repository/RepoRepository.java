@@ -2,6 +2,9 @@ package com.example.olaassignment.repository;
 
 import com.example.olaassignment.network.GitHubAPIService;
 import com.example.olaassignment.network.GithubApi;
+import com.google.gson.JsonElement;
+
+import io.reactivex.Observable;
 
 public class RepoRepository {
 
@@ -20,4 +23,7 @@ public class RepoRepository {
     }
 
 
+    public Observable<JsonElement> fetchTrendingRepos() {
+        return service.getTrendingRepos("", ",", "");
+    }
 }

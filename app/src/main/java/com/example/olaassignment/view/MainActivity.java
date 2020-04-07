@@ -1,11 +1,18 @@
 package com.example.olaassignment.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import com.example.olaassignment.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
-public class MainActivity extends Activity {
+import com.example.olaassignment.R;
+import com.example.olaassignment.viewmodel.FeedsViewModel;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
+
+public class MainActivity extends AppCompatActivity {
+
+    private FeedsViewModel feedsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,10 +20,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         initViewModel();
         showHomeScreenFragment();
+        Picasso.Builder builder = new Picasso.Builder(this);
+        builder.downloader(new OkHttp3Downloader(this));
     }
 
     private void showHomeScreenFragment() {
-        getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
                 android.R.animator.fade_out)
                 .replace(R.id.base_frame_container,
                         HomeScreenFragment.NewInstance(),
@@ -26,6 +35,12 @@ public class MainActivity extends Activity {
     }
 
     private void initViewModel() {
+        feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel.class);
+        feedsViewModel.init();
+    }
+
+    public FeedsViewModel getMainViewModel() {
+        return feedsViewModel;
     }
 
     @Override
