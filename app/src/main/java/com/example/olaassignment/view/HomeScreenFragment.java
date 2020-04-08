@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.olaassignment.R;
@@ -72,7 +74,12 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
         RecyclerView.LayoutManager layoutManagerTrending = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         recyclerViewFeeds.setLayoutManager(layoutManagerTrending);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFeeds.getContext(),
+                LinearLayoutManager.VERTICAL);
+        recyclerViewFeeds.addItemDecoration(dividerItemDecoration);
+        ((SimpleItemAnimator) recyclerViewFeeds.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerViewFeeds.setAdapter(adapter);
+        recyclerViewFeeds.setHasFixedSize(true);
         initViewModel();
     }
 
