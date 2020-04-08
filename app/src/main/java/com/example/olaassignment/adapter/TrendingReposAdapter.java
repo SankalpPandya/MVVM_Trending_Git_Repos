@@ -8,11 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olaassignment.R;
 import com.example.olaassignment.model.RepoEntity;
-import com.example.olaassignment.view.RootApplication;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
         private TextView language;
         private TextView starCount;
         private ImageView coverImage;
+        private Group group;
         private int originalHeight = 0;
         private boolean isViewExpanded = false;
 
@@ -40,6 +42,8 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
             super(itemView);
             txtTitle = itemView.findViewById(R.id.title);
             coverImage = itemView.findViewById(R.id.coverImage);
+            group = itemView.findViewById(R.id.extraInfo);
+            group.setVisibility(View.GONE);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -47,6 +51,8 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
         @Override
         public void onClick(View v) {
             setPosition(getAdapterPosition());
+            group.setVisibility(View.VISIBLE);
+            notifyItemChanged(getAdapterPosition());
         }
 
         @Override
@@ -74,7 +80,7 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
         // holder.subText.setText(data.get(position).getFullName());
         String avatarUrl = data.get(position).getAvatarUrl();
         if (!TextUtils.isEmpty(avatarUrl)) {
-            RootApplication.GetPicasso().load(avatarUrl).into(holder.coverImage);
+            Picasso.get().load(avatarUrl).into(holder.coverImage);
         }
     }
 

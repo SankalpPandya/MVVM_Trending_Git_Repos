@@ -13,7 +13,7 @@ import okhttp3.Response;
 
 public class RootApplication extends android.app.Application {
 
-    static Picasso picasso;
+    private Picasso picasso;
 
     @Override
     public void onCreate() {
@@ -22,7 +22,7 @@ public class RootApplication extends android.app.Application {
     }
 
     private void InitPicasso() {
-        File httpCacheDirecotory = new File(this.getCacheDir(), "http-cache1");
+        File httpCacheDirecotory = new File(this.getCacheDir(), "http-cache");
         Cache cache = new Cache(httpCacheDirecotory, 10 * 1024 * 1024);
 
         OkHttpClient okHttpClient =
@@ -39,10 +39,6 @@ public class RootApplication extends android.app.Application {
         OkHttp3Downloader okHttpDownloader = new OkHttp3Downloader(okHttpClient);
         picasso = new Picasso.Builder(this).downloader(okHttpDownloader).build();
         Picasso.setSingletonInstance(picasso);
-
     }
 
-    public static Picasso GetPicasso() {
-        return picasso;
-    }
 }
