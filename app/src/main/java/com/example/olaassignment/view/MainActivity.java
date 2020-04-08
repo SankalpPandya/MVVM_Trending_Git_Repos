@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.olaassignment.R;
-import com.example.olaassignment.viewmodel.FeedsViewModel;
-import com.squareup.picasso.OkHttp3Downloader;
-import com.squareup.picasso.Picasso;
+import com.example.olaassignment.viewmodel.TrendingReposViewModel;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private FeedsViewModel feedsViewModel;
+    private TrendingReposViewModel trendingReposViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +19,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViewModel();
         showHomeScreenFragment();
-        Picasso.Builder builder = new Picasso.Builder(this);
-        builder.downloader(new OkHttp3Downloader(this));
     }
+
 
     private void showHomeScreenFragment() {
         getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
@@ -35,12 +33,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel.class);
-        feedsViewModel.init();
+        trendingReposViewModel = ViewModelProviders.of(this).get(TrendingReposViewModel.class);
     }
 
-    public FeedsViewModel getMainViewModel() {
-        return feedsViewModel;
+    public TrendingReposViewModel getMainViewModel() {
+        return trendingReposViewModel;
     }
 
     @Override

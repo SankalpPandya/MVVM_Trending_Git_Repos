@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olaassignment.R;
 import com.example.olaassignment.model.RepoEntity;
-import com.squareup.picasso.Picasso;
+import com.example.olaassignment.view.RootApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
         // holder.subText.setText(data.get(position).getFullName());
         String avatarUrl = data.get(position).getAvatarUrl();
         if (!TextUtils.isEmpty(avatarUrl)) {
-            Picasso.get().load(avatarUrl).into(holder.coverImage);
+            RootApplication.GetPicasso().load(avatarUrl).into(holder.coverImage);
         }
     }
 

@@ -15,14 +15,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.olaassignment.R;
 import com.example.olaassignment.adapter.TrendingReposAdapter;
-import com.example.olaassignment.model.RepoEntity;
 import com.example.olaassignment.utils.ApiResponse;
-import com.example.olaassignment.viewmodel.FeedsViewModel;
-import com.google.gson.Gson;
+import com.example.olaassignment.utils.Util;
+import com.example.olaassignment.viewmodel.TrendingReposViewModel;
 import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
@@ -30,9 +28,9 @@ import io.reactivex.annotations.Nullable;
 public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerViewFeeds;
-    ProgressDialog progressDialog;
-    private FeedsViewModel mViewModel;
-    TrendingReposAdapter adapter;
+    private ProgressDialog progressDialog;
+    private TrendingReposViewModel mViewModel;
+    private TrendingReposAdapter adapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static Fragment NewInstance() {
@@ -54,10 +52,10 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     private void initViewModel() {
-        mViewModel = ((MainActivity) getActivity()).getMainViewModel();
-        mViewModel.init();
+        mViewModel = ((MainActivity) Objects.requireNonNull(getActivity())).getMainViewModel();
+        mViewModel.init(getActivity().getApplicationContext());
         mViewModel.geTrendingApiResponse().observe(this, this::processResponse);
-        RefreshData();
+        RefreshData(false);
     }
 
     private void initViews(View view) {
@@ -101,11 +99,7 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
 
         if (!response.isJsonNull()) {
             mSwipeRefreshLayout.setRefreshing(false);
-            Gson gson = new Gson();
-            JsonElement jsonArray = response.getAsJsonArray();
-            ArrayList<RepoEntity> repositories = gson.fromJson(jsonArray, new TypeToken<ArrayList<RepoEntity>>() {
-            }.getType());
-            adapter.setData(repositories);
+            adapter.setData(Util.GetRepoEntitiesFromJsonElements(response));
             adapter.notifyDataSetChanged();
         } else {
             Log.e(this.getClass().getName(), "Failed to parse response " + response);
@@ -140,13 +134,12 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
-        RefreshData();
-    }
-    
-    private void RefreshData() {
-        mViewModel.hitGitHubApi();
+        RefreshData(true);
     }
 
+    private void RefreshData(boolean isForceFetch) {
+        mViewModel.hitGitHubApi(isForceFetch);
+    }
 }
 
 

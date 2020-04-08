@@ -12,4 +12,5 @@ public interface GithubApi {
     Observable<JsonElement> getTrendingRepos(@Query("language") String language,
                                              @Query("since") String since,
                                              @Query("spoken_language_code") String spoken_language);
+
 }

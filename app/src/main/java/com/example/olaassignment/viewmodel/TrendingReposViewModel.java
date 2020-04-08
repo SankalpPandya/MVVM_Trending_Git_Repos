@@ -1,6 +1,6 @@
 package com.example.olaassignment.viewmodel;
 
-import android.util.Log;
+import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,36 +11,33 @@ import com.example.olaassignment.utils.ApiResponse;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FeedsViewModel extends ViewModel {
+public class TrendingReposViewModel extends ViewModel {
 
     private RepoRepository repoRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private final MutableLiveData<ApiResponse> trendingApiResposne = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse> trendingApiResponse = new MutableLiveData<>();
 
-    public void init() {
+    public void init(Context context) {
 
         if (repoRepository != null) {
             return;
         }
-        repoRepository = RepoRepository.getInstance();
+        repoRepository = RepoRepository.getInstance(context);
     }
 
-    public void hitGitHubApi() {
-        disposables.add(repoRepository.fetchTrendingRepos()
+    public void hitGitHubApi(boolean isForceFetch) {
+        disposables.add(repoRepository.fetchTrendingRepos(isForceFetch)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.single())
-                .doOnSubscribe((d) -> trendingApiResposne.postValue(ApiResponse.loading()))
+                .doOnSubscribe((d) -> trendingApiResponse.postValue(ApiResponse.loading()))
                 .subscribe(
-                        result -> {
-                            Log.d("casd", "resukt " + result);
-                            trendingApiResposne.postValue(ApiResponse.success(result));
-                        },
-                        throwable -> trendingApiResposne.postValue(ApiResponse.error(throwable))
+                        result -> trendingApiResponse.postValue(ApiResponse.success(result)),
+                        throwable -> trendingApiResponse.postValue(ApiResponse.error(throwable))
                 ));
     }
 
     public MutableLiveData<ApiResponse> geTrendingApiResponse() {
-        return trendingApiResposne;
+        return trendingApiResponse;
     }
 
     @Override

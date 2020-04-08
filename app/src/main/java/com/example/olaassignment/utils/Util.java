@@ -2,20 +2,52 @@ package com.example.olaassignment.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
-import android.os.Build;
+import android.net.NetworkInfo;
 
-import androidx.annotation.RequiresApi;
+import com.example.olaassignment.model.RepoEntity;
+import com.example.olaassignment.network.interceptor.Intercepter;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 
 public class Util {
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Test for connection
-        NetworkCapabilities mCapabilities = mConnectivityManager.getNetworkCapabilities(mConnectivityManager.getActiveNetwork());
-        return mCapabilities != null &&
-                (mCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                        mCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
+    public static List<RepoEntity> GetRepoEntitiesFromJsonElements(JsonElement jsonElement) {
+        ArrayList<RepoEntity> repositories = new ArrayList<>();
+        try {
+            Gson gson = new Gson();
+            JsonElement jsonArray = jsonElement.getAsJsonArray();
+            repositories = gson.fromJson(jsonArray, new TypeToken<ArrayList<RepoEntity>>() {
+            }.getType());
+
+        } catch (IllegalStateException e) {
+
+        }
+        return repositories;
     }
+
+
+    public static boolean isConnected(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo connection = manager != null ? manager.getActiveNetworkInfo() : null;
+        return connection != null && connection.isConnectedOrConnecting();
+    }
+
+    public static OkHttpClient createCacheClient(Context context) {
+        File httpCacheDirecotory = new File(context.getCacheDir(), "http-cache");
+        Cache cache = new Cache(httpCacheDirecotory, 10 * 1024 * 1024);
+        return new OkHttpClient.Builder()
+                .addNetworkInterceptor(Intercepter.getOnlineInterceptor(context))
+                .addInterceptor(Intercepter.getOfflineInterceptor(context))
+                .cache(cache)
+                .build();
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.example.olaassignment.repository;
 
+import android.content.Context;
+
 import com.example.olaassignment.network.GitHubAPIService;
 import com.example.olaassignment.network.GithubApi;
 import com.google.gson.JsonElement;
@@ -11,19 +13,19 @@ public class RepoRepository {
     private static RepoRepository newsRepository;
     private GithubApi service;
 
-    public static RepoRepository getInstance() {
+    public static RepoRepository getInstance(Context context) {
         if (newsRepository == null) {
-            newsRepository = new RepoRepository();
+            newsRepository = new RepoRepository(context);
         }
         return newsRepository;
     }
 
-    public RepoRepository() {
-        service = GitHubAPIService.createService(GithubApi.class);
+    private RepoRepository(Context context) {
+        service = GitHubAPIService.createService(GithubApi.class, context);
     }
 
-
-    public Observable<JsonElement> fetchTrendingRepos() {
+    public Observable<JsonElement> fetchTrendingRepos(boolean isForceRefresh) {
         return service.getTrendingRepos("", ",", "");
     }
+
 }
