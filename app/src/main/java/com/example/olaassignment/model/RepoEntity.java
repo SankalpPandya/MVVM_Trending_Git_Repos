@@ -39,6 +39,8 @@ public class RepoEntity implements Parcelable {
 
     private String language;
 
+    private boolean isExpanded;
+
     @NonNull
     public Long getId() {
         return id;
@@ -169,4 +171,12 @@ public class RepoEntity implements Parcelable {
             return new RepoEntity[size];
         }
     };
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
 }
