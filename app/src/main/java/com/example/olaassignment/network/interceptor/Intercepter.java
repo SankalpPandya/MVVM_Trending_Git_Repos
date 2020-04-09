@@ -1,44 +1,59 @@
 package com.example.olaassignment.network.interceptor;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.olaassignment.utils.Constants;
 import com.example.olaassignment.utils.Util;
 
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public final class Intercepter {
 
     /**
      * Validate cache, return stream. Return cache if no network.
-     *
-     * @param context
-     * @return
      */
-    public static Interceptor getOnlineInterceptor(final Context context) {
+    public static Interceptor getInterceptor(final Context context) {
         return chain -> {
-            Response response = chain.proceed(chain.request());
-            String headers = response.header("Cache-Control");
+            Request request = chain.request();
+            Response response;
+            String headers = request.header("Cache-Control");
             if (Util.isConnected(context) && (headers == null
-                    || headers.contains("no-store")
                     || headers.contains("no-cache"))) {
-                return response.newBuilder()
+
+                response = chain.proceed(request.newBuilder()
                         .removeHeader("Pragma")
-                        .build();
+                        .build());
             } else if (!Util.isConnected(context)) {
-                return response.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + Constants.
-                                CacheRetentionTimeoutInSeconds)
-                        .removeHeader("Pragma")
-                        .build();
+                if (headers == null || headers.contains("no-cache")) {
+                    return null;
+                }
+                response =
+                        chain.proceed(request.newBuilder()
+                                .removeHeader("Pragma")
+                                .header("Cache-Control",
+                                        "public, only-if-cached, max-stale=" + Constants.
+                                                CacheRetentionTimeoutInSeconds)
+                                .build());
             } else {
-                return response.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, max-age=" + Constants.
-                                CacheRetentionTimeoutInSeconds)
-                        .build();
+                response =
+                        chain.proceed(request.newBuilder()
+                                .removeHeader("Pragma")
+                                .header("Cache-Control", "public, max-age=" + Constants.
+                                        CacheRetentionTimeoutInSeconds)
+                                .build());
             }
+
+            if (response.cacheResponse() != null) {
+                Log.d("Intercepter", "response from cache ...");
+            }
+            if (response.networkResponse() != null) {
+                Log.d("Intercepter", "response from network ...");
+            }
+            return response;
+
         };
     }
 }
