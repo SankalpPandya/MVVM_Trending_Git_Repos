@@ -19,6 +19,7 @@ public class ApiResponse {
     @Nullable
     public final Throwable error;
 
+
     private ApiResponse(Status status, @Nullable JsonElement data, @Nullable Throwable error) {
         this.status = status;
         this.data = data;

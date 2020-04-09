@@ -8,6 +8,7 @@ import com.example.olaassignment.utils.Constants;
 import com.google.gson.JsonElement;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 
 public class RepoRepository {
 
@@ -25,7 +26,7 @@ public class RepoRepository {
         service = GitHubAPIService.createService(GithubApi.class, context);
     }
 
-    public Observable<JsonElement> fetchTrendingRepos(boolean isForceRefresh) {
+    public Observable<Response<JsonElement>> fetchTrendingRepos(boolean isForceRefresh) {
         if (isForceRefresh) {
             return service.getTrendingRepos("no-cache", "", ",", "");
         } else {

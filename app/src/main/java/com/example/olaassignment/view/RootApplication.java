@@ -13,8 +13,6 @@ import okhttp3.Response;
 
 public class RootApplication extends android.app.Application {
 
-    private Picasso picasso;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,7 +35,7 @@ public class RootApplication extends android.app.Application {
                             .build();
                 }).cache(cache).build();
         OkHttp3Downloader okHttpDownloader = new OkHttp3Downloader(okHttpClient);
-        picasso = new Picasso.Builder(this).downloader(okHttpDownloader).build();
+        Picasso picasso = new Picasso.Builder(this).downloader(okHttpDownloader).build();
         Picasso.setSingletonInstance(picasso);
     }
 

@@ -43,8 +43,6 @@ public class TrendingReposAdapter extends RecyclerView.Adapter<TrendingReposAdap
 
         if (data == null) return;
         holder.updateFields(position);
-
-
     }
 
     public RepoEntity getItem(int position) {

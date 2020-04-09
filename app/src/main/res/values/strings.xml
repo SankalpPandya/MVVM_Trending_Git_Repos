@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Trending</string>
     <string name="something_went_wrong">Something went wrong..</string>
     <string name="alien_is_probable_blocking_your_signal">Alien is probable blocking your signal.</string>
     <string name="retry">RETRY</string>

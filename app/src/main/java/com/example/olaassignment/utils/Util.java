@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -40,11 +41,14 @@ public class Util {
         return connection != null && connection.isConnectedOrConnecting();
     }
 
-    public static OkHttpClient createCacheClient(Context context) {
-        File httpCacheDirecotory = new File(context.getCacheDir(), "http-cache");
-        Cache cache = new Cache(httpCacheDirecotory, 10 * 1024 * 1024);
+    public static OkHttpClient getOkHttpClient(Context context) {
+        File httpCacheDirectory = new File(context.getCacheDir(), "http-cache");
+        Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
         return new OkHttpClient.Builder()
-                .addInterceptor(Intercepter.getOnlineInterceptor(context))
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(Intercepter.getInterceptor(context))
                 .cache(cache)
                 .build();
     }

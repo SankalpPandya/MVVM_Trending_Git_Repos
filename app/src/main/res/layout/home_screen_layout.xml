@@ -20,6 +20,8 @@
     <include
         android:id="@+id/error_state_screen"
         android:visibility="gone"
-        layout="@layout/error_state"></include>
+        layout="@layout/error_state">
+
+    </include>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

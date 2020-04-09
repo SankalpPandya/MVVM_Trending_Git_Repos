@@ -100,7 +100,7 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
                 break;
             case ERROR:
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), "Failed to load feeds.. please check internet connection ",
+                Toast.makeText(getActivity(), "Failed to load fresh repos..please check internet connection",
                         Toast.LENGTH_SHORT).show();
                 ShowErrorState();
                 break;

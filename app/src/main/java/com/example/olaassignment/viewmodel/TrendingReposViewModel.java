@@ -31,7 +31,7 @@ public class TrendingReposViewModel extends ViewModel {
                 .observeOn(Schedulers.single())
                 .doOnSubscribe((d) -> trendingApiResponse.postValue(ApiResponse.loading()))
                 .subscribe(
-                        result -> trendingApiResponse.postValue(ApiResponse.success(result)),
+                        result -> trendingApiResponse.postValue(ApiResponse.success(result.body())),
                         throwable -> trendingApiResponse.postValue(ApiResponse.error(throwable))
                 ));
     }
