@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.olaassignment.network.GitHubAPIService;
 import com.example.olaassignment.network.GithubApi;
+import com.example.olaassignment.utils.Constants;
 import com.google.gson.JsonElement;
 
 import io.reactivex.Observable;
@@ -25,7 +26,11 @@ public class RepoRepository {
     }
 
     public Observable<JsonElement> fetchTrendingRepos(boolean isForceRefresh) {
-        return service.getTrendingRepos("", ",", "");
+        if (isForceRefresh) {
+            return service.getTrendingRepos("no-cache", "", ",", "");
+        } else {
+            return service.getTrendingRepos("public, max-age=" + Constants.
+                    CacheRetentionTimeoutInSeconds, "", ",", "");
+        }
     }
-
 }

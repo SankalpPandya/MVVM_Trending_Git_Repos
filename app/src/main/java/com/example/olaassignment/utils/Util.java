@@ -44,8 +44,7 @@ public class Util {
         File httpCacheDirecotory = new File(context.getCacheDir(), "http-cache");
         Cache cache = new Cache(httpCacheDirecotory, 10 * 1024 * 1024);
         return new OkHttpClient.Builder()
-                .addNetworkInterceptor(Intercepter.getOnlineInterceptor(context))
-                .addInterceptor(Intercepter.getOfflineInterceptor(context))
+                .addInterceptor(Intercepter.getOnlineInterceptor(context))
                 .cache(cache)
                 .build();
     }

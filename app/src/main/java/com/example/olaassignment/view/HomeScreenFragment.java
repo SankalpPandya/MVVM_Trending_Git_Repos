@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,8 +36,9 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
     private TrendingReposViewModel mViewModel;
     private TrendingReposAdapter adapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ConstraintLayout mErorStateLayout;
 
-    public static Fragment NewInstance() {
+    static Fragment NewInstance() {
         return new HomeScreenFragment();
     }
 
@@ -63,7 +66,10 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
     private void initViews(View view) {
         recyclerViewFeeds = view.findViewById(R.id.recycle_view_trending);
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        Button mRetryButton = view.findViewById(R.id.retry);
+        mErorStateLayout = view.findViewById(R.id.error_state_screen);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mRetryButton.setOnClickListener(v -> RefreshData(true));
     }
 
     @Override
@@ -96,20 +102,29 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Failed to load feeds.. please check internet connection ",
                         Toast.LENGTH_SHORT).show();
+                ShowErrorState();
                 break;
             default:
                 break;
         }
     }
 
+    private void ShowErrorState() {
+        recyclerViewFeeds.setVisibility(View.GONE);
+        mErorStateLayout.setVisibility(View.VISIBLE);
+    }
+
     private void renderSuccessResponse(JsonElement response) {
 
         if (!response.isJsonNull()) {
+            mErorStateLayout.setVisibility(View.GONE);
+            recyclerViewFeeds.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setRefreshing(false);
             adapter.setData(Util.GetRepoEntitiesFromJsonElements(response));
             adapter.notifyDataSetChanged();
         } else {
             Log.e(this.getClass().getName(), "Failed to parse response " + response);
+            ShowErrorState();
         }
     }
 
