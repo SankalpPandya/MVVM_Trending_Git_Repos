@@ -1,6 +1,8 @@
 package com.example.olaassignment.view;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,7 +14,6 @@ import com.example.olaassignment.viewmodel.TrendingReposViewModel;
 public class MainActivity extends AppCompatActivity {
 
     private TrendingReposViewModel trendingReposViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
                         HomeScreenFragment.class.getName())
                 .addToBackStack(HomeScreenFragment.class.getName())
                 .commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     private void initViewModel() {

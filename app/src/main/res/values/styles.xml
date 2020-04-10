@@ -1,10 +1,12 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@android:color/background_light</item>
+        <item name="android:actionOverflowButtonStyle">@style/menu</item>
         <item name="titleTextColor">@color/titleColor</item>
         <item name="android:titleTextStyle">@font/roboto_medium_font</item>
     </style>
+
+    <style name="menu" parent="android:style/Widget.Holo.Light.ActionButton.Overflow"></style>
+
 </resources>

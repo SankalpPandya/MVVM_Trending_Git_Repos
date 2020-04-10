@@ -3,4 +3,6 @@
     <string name="something_went_wrong">Something went wrong..</string>
     <string name="alien_is_probable_blocking_your_signal">Alien is probable blocking your signal.</string>
     <string name="retry">RETRY</string>
+    <string name="sort_by_stars">Sort by stars</string>
+    <string name="sort_by_name">Sort by name</string>
 </resources>

@@ -48,9 +48,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     /* Test  */
-    testImplementation "org.mockito:mockito-core:2.23.0"
-    androidTestImplementation "org.mockito:mockito-core:2.23.0"
-    androidTestImplementation "org.mockito:mockito-android:2.7.22"
+    testImplementation "org.mockito:mockito-core:2.25.0"
+    androidTestImplementation "org.mockito:mockito-core:2.25.0"
+    androidTestImplementation "org.mockito:mockito-android:2.25.0"
     testImplementation 'junit:junit:4.13'
     testImplementation("com.squareup.okhttp3:mockwebserver:4.0.0")
     testImplementation("com.squareup.okhttp3:okhttp:4.4.1")
@@ -59,5 +59,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.2.0'
 }

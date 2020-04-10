@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
@@ -20,9 +21,12 @@ import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import retrofit2.Response;
 
+import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 public class GithubRepositoryTest {
 
+    @Mock
     GithubApi githubApiService;
 
     @Rule
@@ -38,8 +42,14 @@ public class GithubRepositoryTest {
     @Test
     public void loadPostsTest() {
         List<RepoEntity> mockRepositories = MockTestUtil.mockRepositories();
+
+        repository.fetchTrendingRepos(true);
+        when(githubApiService.getTrendingRepos("no-cache", "", "", ""))
+                .thenReturn(Observable.empty());
+
         Observable<Response<JsonElement>>
                 data = repository.fetchTrendingRepos(true);
+
         TestObserver testObserver = new TestObserver();
         data.subscribe(testObserver);
         testObserver.assertNoErrors();
