@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tv_title_trending_top_padding">10dp</dimen>
-    <dimen name="card_view_padding_end">20dp</dimen>
-    <dimen name="card_view_top_news_width">500dp</dimen>
-    <dimen name="card_view_top_news_height">400dp</dimen>
-    <dimen name="top_news_image_width">300dp</dimen>
     <dimen name="recycleview_top_margin">25dp</dimen>
-    <dimen name="item_offset">25dp</dimen>
+    <dimen name="errorMessage_margin_top">23dp</dimen>
+    <dimen name="errorMessage_text_size">18sp</dimen>
+    <dimen name="title_item_text_size">12sp</dimen>
+    <dimen name="error_subtext_size">15sp</dimen>
+    <dimen name="error_subtext_margin_top">8dp</dimen>
+    <dimen name="retry_margin_start">16dp</dimen>
+    <dimen name="retry_text_size">16sp</dimen>
+    <dimen name="circle_image_dimen">32dp</dimen>
+    <dimen name="language_text_margin_start">5dp</dimen>
+
 </resources>

@@ -116,7 +116,7 @@ public class HomeScreenFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void renderSuccessResponse(JsonElement response) {
 
-        if (!response.isJsonNull()) {
+        if (response != null && !response.isJsonNull()) {
             mErorStateLayout.setVisibility(View.GONE);
             recyclerViewFeeds.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setRefreshing(false);

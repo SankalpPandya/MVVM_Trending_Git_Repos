@@ -34,7 +34,7 @@ public final class Intercepter {
                         chain.proceed(request.newBuilder()
                                 .removeHeader("Pragma")
                                 .header("Cache-Control",
-                                        "public, only-if-cached, max-stale=" + Constants.
+                                        "public, only-if-cached, max-age=" + Constants.
                                                 CacheRetentionTimeoutInSeconds)
                                 .build());
             } else {
