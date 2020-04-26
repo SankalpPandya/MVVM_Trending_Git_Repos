@@ -27,3 +27,7 @@ Highlights of this project------------------------------------------------------
 - Application supports Caching Http responses including images using OkHttp interceptors for Retrofit Requests for configurable timeout.
 - once applucation has got the succussfull response from server , every consequent requests are intercepted by request interceptor of retrofit OkHttp client
   which returns repose from cache unless cache is not expired which helps app optimize bunch repeated network requests.
+  
+  
+  ![](/assignment_1.gif)
+
