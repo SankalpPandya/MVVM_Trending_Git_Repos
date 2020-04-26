@@ -14,6 +14,7 @@ Highlights of this project------------------------------------------------------
 10. Expanding recyclerview item on click
 11. Constraint Layout
 12. Swipe down layout to refresh recyclerview
+13. Round imageview using external liberary.
 
  Application Architecture and features-----------------------------------------------------------------------------------------------------------
 
