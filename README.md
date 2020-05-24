@@ -7,7 +7,7 @@ Highlights of this project------------------------------------------------------
 3.  Gson
 4.  RxJava
 5.  Picasso
-6.  100% Offline support (HTTP response caching & Network calls optimiation)
+6.  100% Offline support (HTTP response caching & Network calls optimization)
 7.  AndroidX
 8.  MockWebServer for Junit test
 9.  Esspresso for UI test
